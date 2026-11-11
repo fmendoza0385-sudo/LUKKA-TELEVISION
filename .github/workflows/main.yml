@@ -18,8 +18,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Configurar Android SDK
-        uses: android-actions/setup-android@v3
+      # ubuntu-latest ya trae el Android SDK. Solo se aceptan las licencias para que
+      # Gradle pueda descargar la plataforma que necesite (android-34, build-tools).
+      - name: Aceptar licencias del Android SDK
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
 
       - name: Permisos de gradlew
         run: chmod +x gradlew
